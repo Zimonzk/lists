@@ -66,5 +66,5 @@ void arraylist_replace(arraylist* list, void* element_ptr, uint64_t index)
 
 void* arraylist_get(arraylist* list, uint64_t index)
 {
-    return (list->data + index);
+    return (void*)(((char*)list->data) + (index * list->unit_size));
 }
