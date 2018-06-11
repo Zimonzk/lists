@@ -76,7 +76,7 @@ void* arraylist_get(arraylist* list, uint64_t index)
     return (void*)(((char*)list->data) + (index * list->unit_size));
 }
 
-void arraylist_append_multi(arraylist* list, void* element0_ptr, uint64_t index, uint64_t ammount)
+void arraylist_append_multi(arraylist* list, void* element0_ptr, uint64_t ammount)
 {
     list->used_units += ammount;
     if(list->used_units > list->allocated_units) {
@@ -90,16 +90,21 @@ void arraylist_append_multi(arraylist* list, void* element0_ptr, uint64_t index,
             exit(1);
         }
     }
-    copydata(list->unit_size * ammount, (list->data + (index * list->unit_size)), element0_ptr);
+    copydata(list->unit_size * ammount, (list->data + ((list->used_units - ammount) * list->unit_size)), element0_ptr);
 }
 
 void arraylist_insert_multi(arraylist* list, void* element0_ptr, uint64_t index, uint64_t ammount)
 {
+	  /*TODO shift the old entries up*/
     copydata(list->unit_size * ammount, (list->data + (index * list->unit_size)), element0_ptr);
 }
 
 void arraylist_replace_multi(arraylist* list, void* element0_ptr, uint64_t index, uint64_t ammount)
-{
-    /*TODO shift the old entries up*/	
+{	
+    if((list->used_units - ammount) < index) {
+        /*don't do anything if any of the objects which are supposed
+				 *  to replace old objects are outside of the range of used objects*/
+        return;
+		}
     copydata(list->unit_size * ammount, (list->data + (index * list->unit_size)), element0_ptr);
 }

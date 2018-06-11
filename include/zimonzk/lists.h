@@ -35,7 +35,7 @@ void arraylist_replace(arraylist* list, void* element_ptr, uint64_t index);
 
 void* arraylist_get(arraylist* list, uint64_t index);
 
-void arraylist_append_multi(arraylist* list, void* element0_ptr, uint64_t index, uint64_t ammount);
+void arraylist_append_multi(arraylist* list, void* element0_ptr, uint64_t ammount);
 
 void arraylist_insert_multi(arraylist* list, void* element0_ptr, uint64_t index, uint64_t ammount);
 
